@@ -21,4 +21,13 @@ class DataPersistence {
       return false;
     }
   }
+  
+  // Supprimer une ville
+  Future<bool> removeCity(String string) async {
+    final prefs = await SharedPreferences.getInstance();
+    var list = prefs.getStringList(key) ?? [];
+    list.remove(string);
+    return prefs.setStringList(key, list);
+  }  
+
 }
