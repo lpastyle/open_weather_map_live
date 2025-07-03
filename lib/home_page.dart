@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:open_weather_map_live/location_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +10,14 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  LocationData? locationData;
+  
+  @override
+  void initState() {
+    getUserLocation();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,9 +27,17 @@ class HomePageState extends State<HomePage> {
         title: Text("Open Weather Map")
       ),
       body: Center(
-        child: Text("HOME PAGE"),)
+        child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
+          style: TextStyle(fontSize: 24)
+        )
+      )
     );
     
+  }
+
+  void getUserLocation() async {
+    final currentLocation = await LocationService().getPosition();
+    setState(() => locationData = currentLocation);
   }
 
 }
