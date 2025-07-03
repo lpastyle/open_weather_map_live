@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:open_weather_map_live/geo_position.dart';
 import 'package:open_weather_map_live/location_service.dart';
+import 'package:open_weather_map_live/weather_api_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,7 +47,10 @@ class HomePageState extends State<HomePage> {
 
   void getUserPosition() async {
     final currentPosition = await LocationService().getCity();
-    setState(() => userPosition = currentPosition);
+    setState(() {
+      userPosition = currentPosition;
+      WeatherApiService().callWeatherApi(userPosition!);
+    } );
   }
 
 }
