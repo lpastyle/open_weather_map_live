@@ -19,6 +19,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   //LocationData? locationData;
   GeoPosition? userPosition;
+  GeoPosition? cityPosition;
+
   WeatherApiResponse? apiResponse;
   // villes visibles dans le drawer menu
   List<String> cities = [];
@@ -64,7 +66,7 @@ class HomePageState extends State<HomePage> {
     final currentPosition = await LocationService().getCity();
     setState(() {
       userPosition = currentPosition;
-      WeatherApiService().callWeatherApi(userPosition!);
+      cityPosition = currentPosition;
     } );
     final currentResponse = await WeatherApiService().callWeatherApi(userPosition!);
     setState(() {
@@ -74,9 +76,22 @@ class HomePageState extends State<HomePage> {
     onAddCity(currentResponse.city.name);
   }
 
-  void onMenuItemTap(String s) {
+  void updateWeatherInfos() async {
+    if (cityPosition == null) return;
+    apiResponse = await WeatherApiService().callWeatherApi(cityPosition!);
+    setState(() {});
+  }
+
+  void onMenuItemTap(String s) async {
     debugPrint("ontap($s)");
     Navigator.of(context).pop();
+    if (s == userPosition?.city) {
+      cityPosition = userPosition;
+      updateWeatherInfos();
+    } else {
+      cityPosition = await LocationService().getCoordsFromCity(s);
+      updateWeatherInfos();
+    }    
   }
 
   void onAddCity(String s) {
