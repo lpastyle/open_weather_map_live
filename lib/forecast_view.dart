@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_weather_map_live/current_weather_view.dart';
+import 'package:open_weather_map_live/daily_weather_tile.dart';
 import 'package:open_weather_map_live/grouped_weather.dart';
 import 'package:open_weather_map_live/weather_api_response.dart';
 import 'package:open_weather_map_live/weather_api_service.dart';
@@ -23,13 +24,11 @@ class ForecastView extends StatelessWidget {
           CurrentWeatherView(forecast: apiResponse!.list.first),
           Expanded(
             child: ListView.separated(
-            itemBuilder: (context, index) => Text(
-              "${weatherByDay[index].day}: ${weatherByDay[index].description}",
-              style: const TextStyle(fontSize: 24)
-            ),
-            separatorBuilder: (context, index) => const Divider(),
-            itemCount: weatherByDay.length,
-          ))
+              itemBuilder: (context, index) => DailyWeatherTile(day: weatherByDay[index]),
+              separatorBuilder:(context, index) => const Divider(),
+              itemCount: weatherByDay.length,
+            )
+          )
         ],
       );
     }
