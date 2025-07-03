@@ -38,4 +38,16 @@ class LocationService {
       lon: lon);
   }
 
+  // convert city name to lat,lon
+  Future<GeoPosition?> getCoordsFromCity(String city) async {
+    final placemarks = await geocoding.locationFromAddress(city);
+    if (placemarks.isEmpty) return null;
+    final bestChoice = placemarks.first;
+    return GeoPosition(
+        city: city,
+        lat: bestChoice.latitude,
+        lon: bestChoice.longitude
+    );
+  }
+
 }

@@ -21,7 +21,10 @@ class ForecastView extends StatelessWidget {
       List<GroupedWeather> weatherByDay = WeatherApiService.groupByDay(apiResponse!);
       return Column(
         children: [
-          CurrentWeatherView(forecast: apiResponse!.list.first),
+          CurrentWeatherView(
+            forecast: apiResponse!.list.first,
+            cityName: apiResponse!.city.name,
+          ),
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => DailyWeatherTile(day: weatherByDay[index]),
