@@ -22,6 +22,11 @@ class LocationService {
   // convert lat,lon to city name
   Future<GeoPosition?> getCity() async {
     final LocationData? position = await getPosition();
+    // if location service fails, use harcoded position
+    // final LocationData position = LocationData.fromMap({
+    //   "latitude": 48.8566,
+    //   "longitude": 2.3522,
+    // });
     final double lat = position?.latitude ?? 0;
     final double lon = position?.longitude ?? 0;
     List<geocoding.Placemark> placemark = await geocoding.placemarkFromCoordinates(lat, lon);
