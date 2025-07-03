@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:open_weather_map_live/add_city_view.dart';
 import 'package:open_weather_map_live/drawer_menu.dart';
 import 'package:open_weather_map_live/forecast_view.dart';
 import 'package:open_weather_map_live/geo_position.dart';
@@ -38,13 +39,14 @@ class HomePageState extends State<HomePage> {
         cities: [userPosition == null ? "" : userPosition!.city, "Paris", "Madrid", "Tunis"],
         onTap: onMenuItemTap
       ),
-      body: Center(
-          //child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
-          //child: Text('Latitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}',
-          //child: Text("Api count=${apiResponse?.cnt}\nLatitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}",
-          //style: TextStyle(fontSize: 24)
-          child: ForecastView(apiResponse:  apiResponse),
-        )
+      body: Column(
+        children: [
+          AddCityView(onAddCity: onAddCity),
+          Expanded(
+              child: ForecastView(apiResponse: apiResponse)
+          )
+        ]
+      )      
       );
   }
 
@@ -68,5 +70,9 @@ class HomePageState extends State<HomePage> {
   void onMenuItemTap(String s) {
     debugPrint("ontap($s)");
     Navigator.of(context).pop();
+  }
+
+  void onAddCity(String s) {
+    debugPrint("add city <$s>");
   }
 }
