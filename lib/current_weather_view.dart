@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:open_weather_map_live/weather_api_response.dart';
+
 class CurrentWeatherView extends StatelessWidget {
   final Forecast forecast;
 

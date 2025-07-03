@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:open_weather_map_live/forecast_view.dart';
 import 'package:open_weather_map_live/geo_position.dart';
 import 'package:open_weather_map_live/location_service.dart';
 import 'package:open_weather_map_live/weather_api_response.dart';
@@ -35,8 +36,9 @@ class HomePageState extends State<HomePage> {
       body: Center(
           //child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
           //child: Text('Latitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}',
-          child: Text("Api count=${apiResponse?.cnt}\nLatitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}",
-          style: TextStyle(fontSize: 24)
+          //child: Text("Api count=${apiResponse?.cnt}\nLatitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}",
+          //style: TextStyle(fontSize: 24)
+          child: ForecastView(apiResponse:  apiResponse),
         )
       )
     );
