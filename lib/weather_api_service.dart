@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:open_weather_map_live/api_key_service.dart';
 import 'package:open_weather_map_live/geo_position.dart';
 import 'package:http/http.dart';
+import 'package:open_weather_map_live/weather_api_response.dart';
 
 class WeatherApiService {
   final baseUrl="https://api.openweathermap.org/data/2.5/forecast";
@@ -21,15 +22,15 @@ String prepareQuery(GeoPosition geoPosition) {
   return query;
  }
 
- Future<void> callWeatherApi(GeoPosition position) async {
+ Future<WeatherApiResponse> callWeatherApi(GeoPosition position) async {
   final query = prepareQuery(position);
   final uri = Uri.parse(query);
   final call = await get(uri);
 
   // le 'dynamic' permet d'avoir un polymorphisme de type
   Map<String, dynamic> jsonResponse = json.decode(call.body);
-  
-  debugPrint(jsonResponse.toString());
+  //debugPrint(jsonResponse.toString());
+  return WeatherApiResponse.fromJson(jsonResponse);
  }
 
 }
