@@ -40,9 +40,7 @@ class HomePageState extends State<HomePage> {
           //style: TextStyle(fontSize: 24)
           child: ForecastView(apiResponse:  apiResponse),
         )
-      )
-    );
-    
+      );
   }
 
   // void getUserLocation() async {

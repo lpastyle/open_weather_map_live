@@ -14,6 +14,12 @@ class WeatherApiService {
   final lang = "lang=fr";
   final units = "units=metric";
 
+static String iconUrlFromId(String iconId) {
+    String url = "http://openweathermap.org/img/wn/$iconId@2x.png";
+    debugPrint("iconUrl=$url");
+    return url;
+  }
+
 String prepareQuery(GeoPosition geoPosition) {
   final userLat = geoPosition.lat;
   final userLon = geoPosition.lon;

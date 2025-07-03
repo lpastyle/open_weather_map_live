@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:open_weather_map_live/weather_api_response.dart';
+import 'package:open_weather_map_live/weather_api_service.dart';
 
 class CurrentWeatherView extends StatelessWidget {
   final Forecast forecast;
@@ -12,19 +13,20 @@ class CurrentWeatherView extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: size.height / 3,
+      height: size.height / 4,
       padding: const EdgeInsets.all(8),
       child: Card(
         elevation: 7,
         child: Container (
           padding: const EdgeInsets.all(8),
+          color: Colors.lightBlueAccent,
           child: Column(
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Image à venir,
+                  Image.network(WeatherApiService.iconUrlFromId(forecast.weather.first.icon)),
                   Text("${forecast.main.temp.toInt()}°C", style: const TextStyle(fontSize: 26))
                 ],
               ),
