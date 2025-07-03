@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:open_weather_map_live/add_city_view.dart';
+import 'package:open_weather_map_live/data_persistence.dart';
 import 'package:open_weather_map_live/drawer_menu.dart';
 import 'package:open_weather_map_live/forecast_view.dart';
 import 'package:open_weather_map_live/geo_position.dart';
@@ -19,11 +20,14 @@ class HomePageState extends State<HomePage> {
   //LocationData? locationData;
   GeoPosition? userPosition;
   WeatherApiResponse? apiResponse;
+  // villes visibles dans le drawer menu
+  List<String> cities = [];
   
   @override
   void initState() {
-   //getUserLocation();
-   getUserPosition();
+    //getUserLocation();
+    getUserPosition();
+    updateCities();
     super.initState();
   }
 
@@ -36,7 +40,8 @@ class HomePageState extends State<HomePage> {
         title: Text("Open Weather Map")
       ),
       drawer: DrawerMenu(
-        cities: [userPosition == null ? "" : userPosition!.city, "Paris", "Madrid", "Tunis"],
+        //cities: [userPosition == null ? "" : userPosition!.city, "Paris", "Madrid", "Tunis"],
+        cities: cities,
         onTap: onMenuItemTap
       ),
       body: Column(
@@ -65,6 +70,8 @@ class HomePageState extends State<HomePage> {
     setState(() {
       apiResponse = currentResponse;
     });
+    // add user city in city list
+    onAddCity(currentResponse.city.name);
   }
 
   void onMenuItemTap(String s) {
@@ -74,5 +81,12 @@ class HomePageState extends State<HomePage> {
 
   void onAddCity(String s) {
     debugPrint("add city <$s>");
+    DataPersistence().addCity(s).then((value) => updateCities());
+  }
+
+  // Charger les villes sauvegardées dans les shared preferences
+  void updateCities() async {
+    cities = await DataPersistence().getCities();
+    setState(() {});
   }
 }
