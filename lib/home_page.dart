@@ -27,7 +27,7 @@ class HomePageState extends State<HomePage> {
         title: Text("Open Weather Map")
       ),
       body: Center(
-        child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
+          child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
           style: TextStyle(fontSize: 24)
         )
       )
