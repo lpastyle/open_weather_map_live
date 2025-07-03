@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
+import 'package:open_weather_map_live/geo_position.dart';
+import 'package:geocoding/geocoding.dart' as geocoding; // alias nécessaire car symboles aussi definis dans 'location'
+
 
 class LocationService {
 
@@ -14,6 +17,20 @@ class LocationService {
       debugPrint("unable to get user's location : ${error.message}");
       return null;
     }
+  }
+
+  // convert lat,lon to city name
+  Future<GeoPosition?> getCity() async {
+    final LocationData? position = await getPosition();
+    final double lat = position?.latitude ?? 0;
+    final double lon = position?.longitude ?? 0;
+    List<geocoding.Placemark> placemark = await geocoding.placemarkFromCoordinates(lat, lon);
+    debugPrint(placemark.toString());
+    final firstPlace = placemark.first;
+    return GeoPosition(
+      city: firstPlace.locality ?? "", 
+      lat: lat,
+      lon: lon);
   }
 
 }
