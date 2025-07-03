@@ -44,7 +44,8 @@ class HomePageState extends State<HomePage> {
       drawer: DrawerMenu(
         //cities: [userPosition == null ? "" : userPosition!.city, "Paris", "Madrid", "Tunis"],
         cities: cities,
-        onTap: onMenuItemTap
+        onTap: onMenuItemTap,
+        onDelete: onMenuItemDelete,
       ),
       body: Column(
         children: [
@@ -98,7 +99,10 @@ class HomePageState extends State<HomePage> {
     debugPrint("add city <$s>");
     DataPersistence().addCity(s).then((value) => updateCities());
   }
-
+  
+  void onMenuItemDelete(String s) {
+    DataPersistence().removeCity(s).then((value) => updateCities());
+  }
   // Charger les villes sauvegardées dans les shared preferences
   void updateCities() async {
     cities = await DataPersistence().getCities();

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
   final List<String> cities;
-  
   final Function(String) onTap;
+  final Function(String) onDelete;
 
   const DrawerMenu({super.key, 
     required this.cities,
     required this.onTap,
+    required this.onDelete
   });
 
   @override
@@ -45,6 +46,10 @@ class DrawerMenu extends StatelessWidget {
           style: const TextStyle(fontSize: 30)
         ),
         onTap: (() => onTap(string)),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () => onDelete(string),
+        ),
     );
   }
 }
