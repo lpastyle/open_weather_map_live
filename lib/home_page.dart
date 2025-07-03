@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:open_weather_map_live/drawer_menu.dart';
 import 'package:open_weather_map_live/forecast_view.dart';
 import 'package:open_weather_map_live/geo_position.dart';
 import 'package:open_weather_map_live/location_service.dart';
@@ -33,6 +34,10 @@ class HomePageState extends State<HomePage> {
         titleTextStyle: TextStyle(fontSize: 24, color: Colors.white),
         title: Text("Open Weather Map")
       ),
+      drawer: DrawerMenu(
+        cities: [userPosition == null ? "" : userPosition!.city, "Paris", "Madrid", "Tunis"],
+        onTap: onMenuItemTap
+      ),
       body: Center(
           //child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
           //child: Text('Latitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}',
@@ -58,5 +63,10 @@ class HomePageState extends State<HomePage> {
     setState(() {
       apiResponse = currentResponse;
     });
+  }
+
+  void onMenuItemTap(String s) {
+    debugPrint("ontap($s)");
+    Navigator.of(context).pop();
   }
 }
