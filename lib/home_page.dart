@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:open_weather_map_live/geo_position.dart';
 import 'package:open_weather_map_live/location_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,11 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  LocationData? locationData;
+  //LocationData? locationData;
+  GeoPosition? userPosition;
   
   @override
   void initState() {
-    getUserLocation();
+   //getUserLocation();
+   getUserPosition();
     super.initState();
   }
 
@@ -27,7 +30,8 @@ class HomePageState extends State<HomePage> {
         title: Text("Open Weather Map")
       ),
       body: Center(
-          child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
+          //child: Text('Latitude=${locationData?.latitude}\nLongitude=${locationData?.longitude}',
+          child: Text('Latitude=${userPosition?.lat}\nLongitude=${userPosition?.lon}\nCity=${userPosition?.city}',
           style: TextStyle(fontSize: 24)
         )
       )
@@ -35,9 +39,14 @@ class HomePageState extends State<HomePage> {
     
   }
 
-  void getUserLocation() async {
-    final currentLocation = await LocationService().getPosition();
-    setState(() => locationData = currentLocation);
+  // void getUserLocation() async {
+  //   final currentLocation = await LocationService().getPosition();
+  //   setState(() => locationData = currentLocation);
+  // }
+
+  void getUserPosition() async {
+    final currentPosition = await LocationService().getCity();
+    setState(() => userPosition = currentPosition);
   }
 
 }
